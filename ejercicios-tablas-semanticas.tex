@@ -18,7 +18,7 @@
 % biber --output_format=bibtex --output_resolve prooftrees.bcf to generate .bib for upload
 % sed -i '/1977/s/DATE/YEAR
 %%
-\pdfminorversion=7
+%\pdfminorversion=7
 \RequirePackage{svn-prov}
 \ProvidesFileSVN{$Id: prooftrees.tex 5576 2016-12-06 03:28:22Z cfrees $}[v0.5 \revinfo]
 \GetFileInfoSVN*
@@ -494,7 +494,10 @@
   }
   [\vver{v} U \lif (V \vee W), name=prem1,just=Premisa
     [\vver{v} (V \wedge W) \lif \lnot U, name=prem2,just=Premisa
-      [\vver{f} \lnot U, name=conc,just=Conclusión]
+      [\vver{f} \lnot U, name=conc,just=Conclusión
+        [\vver{f} V \wedge W]
+        [\vver[v] \lnot U]
+      ]
     ]
   ]
 \end{prooftree}
