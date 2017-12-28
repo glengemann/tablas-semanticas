@@ -1,0 +1,58 @@
+%\documentclass[border=10pt,tikz,letter]{standalone}
+\documentclass[10pt,british,letter]{ltxdoc}
+\usepackage{prooftrees,turnstile}
+\newcommand*{\lif}{\ensuremath{\mathbin{\rightarrow}}}
+
+\newcommand\vver[1]{\textcolor{red}{\textit{#1 }}}
+
+\begin{document}
+
+\begin{prooftree}
+{
+to prove={\{P \vee (Q \vee \lnot R), P \lif \lnot R, Q \lif \lnot R\} \sststile{}{} \lnot R}
+}
+[P \vee (Q \vee \lnot R),  just=Ass, checked
+[P \lif \lnot R,  just=Ass, checked
+  [Q \lif \lnot R,  just=Ass, checked, name=last premise
+    [\lnot\lnot R, just={$\lnot$ Conc}, name=not conc
+      [P,  just={$\vee$ Elim:!uuuu}
+        [\lnot P, close={:!u,!c}]
+        [\lnot R,  close={:not conc,!c}, just={$\lif$ Elim:!uuuu}]]
+      [Q \vee \lnot R
+        [Q, move by=1
+          [\lnot Q, close={:!u,!c}]
+          [\lnot R,  close={:not conc,!c}, just={$\lif$ Elim:last premise}]]
+        [\lnot R, close={:not conc,!c}, move by=1, just={$\vee$ Elim:!u}]]]]]]
+\end{prooftree}
+
+\begin{prooftree}
+{
+  to prove={(\exists x) Ax \wedge Bx, (\exists x) Cx \wedge Bx \sststile{}{} (\forall x) Cx \lif \lnot Ax}
+}
+[\vver{v} (\exists x) Ax \wedge Bx, name=prem1
+  [\vver{v} (\exists x) Cx \wedge Bx, name=prem2
+    [\vver{f} (\forall x) Cx \lif \lnot Ax, name=conc
+      [\vver{v} Aa \wedge Ba, just=VP:prem1, name=vpprem1
+        [\vver{v} Ca \wedge Ba, just=VP:prem2, name=vpprem2
+          [\vver{f} Ca \lif \lnot Aa, just=FG:conc, name=fgconc
+            [\vver{v} Ca, just=FI:fgconc, name=fifgconc
+              [\vver{f} \lnot Aa, just=FI:fgconc, name=fifgconccon
+                [\vver{v} Aa, just=VC:vpprem1
+                  [\vver{v} Ba, just=VC:vpprem1
+                    [\vver{v} Ca, just=VC:vpprem2
+                      [\vver{v} Ba, just=VC:vpprem2
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ]
+  ]
+]
+\end{prooftree}
+
+\end{document}

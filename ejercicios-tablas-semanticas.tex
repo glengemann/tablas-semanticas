@@ -482,7 +482,17 @@
   }
   [\vver{v} (R \vee S) \lif T, name=prem1,just=Premisa
     [\vver{v} T \lif (R \wedge S), name=prem2,just=Premisa
-      [\vver{f} (R \wedge S) \lif (R \vee S), name=conc,just=Conclusión]
+      [\vver{f} (R \wedge S) \lif (R \vee S), name=conc,just=Conclusión
+        [\vver{v} R \wedge S, just=FI:conc
+          [\vver{f} R \vee S, just=FI:conc
+            [\vver{f} R \vee S, just=VI:prem1]
+            [\vver{v} T, just=VI:prem1, name=viprem1
+              [\vver{f} T, just=VI:prem2, close={:viprem1,!c}]
+              [\vver{v} R \wedge S, just=VI:prem2]
+            ]
+          ]
+        ]
+      ]
     ]
   ]
 \end{prooftree}
@@ -493,10 +503,13 @@
     to prove={U \lif (V \vee W), (V \wedge W) \lif \lnot U \sststile{}{} \lnot U}
   }
   [\vver{v} U \lif (V \vee W), name=prem1,just=Premisa
-    [\vver{v} (V \wedge W) \lif \lnot U, name=prem2,just=Premisa
+    [\vver{v} (V \wedge W) \lif \lnot U, name=prem2, just=Premisa
       [\vver{f} \lnot U, name=conc,just=Conclusión
-        [\vver{f} V \wedge W]
-        [\vver[v] \lnot U]
+        [\vver{f} V \wedge W, just=VI:prem2
+          [\vver{f} U, just=VI:prem1, close={:conc,!c}]
+          [\vver{v} V \vee W, just=VI:prem1]
+        ]
+        [\vver{v} \lnot U, close={:conc,!c}]
       ]
     ]
   ]
