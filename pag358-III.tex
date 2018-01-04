@@ -1,0 +1,226 @@
+%\documentclass[border=10pt,tikz,letter]{standalone}
+\documentclass[10pt,british,letter]{ltxdoc}
+\usepackage{prooftrees,turnstile}
+\newcommand*{\lif}{\ensuremath{\mathbin{\rightarrow}}}
+
+\newcommand\vver[1]{\textcolor{red}{\textit{#1 }}}
+
+\begin{document}
+
+\begin{prooftree}
+{
+  to prove={(A \vee B) \lif (A \wedge B), A \vee B \sststile{}{} A \wedge B}
+}
+  [\vver{v} (A \vee B) \lif (A \wedge B), just=Premisa, name=p1
+    [\vver{v} A \vee B, just=Premisa
+        [\vver{f} A \wedge B, just=Conclusión
+          [\vver{f} A \vee B, just={VI:p1}, close]
+          [\vver{v} A \wedge B, close]
+        ]
+      ]
+    ]
+  ]
+\end{prooftree}
+
+\begin{prooftree}
+  {
+    to prove={(C \vee D) \lif (C \wedge D), C \wedge D \sststile{}{} C \vee D}
+  }
+  [\vver{v} (C \vee D) \lif (C \wedge D), just=Premisa, name=p1
+    [\vver{v} C \wedge D, just=Premisa, name=p2
+      [\vver{f} C \vee D, just=Conclusión, name=conc
+        [\vver{f} C \vee D, just=VI:p1, name=via
+          [\vver{f} C, just=FD:via
+            [\vver{f} D, just=FD:via
+              [\vver{v} C, just=VC:p2
+                [\vver{v} D, close, just=VC:p2]
+              ]
+            ]
+          ]
+        ]
+        [\vver{v} C \wedge D, just=VI:p1, name=vic
+          [\vver{v} C, just=VC:vic
+            [\vver{v} D, just=VC:vic
+              [\vver{f} C, just=FD:conc
+                [\vver{f} D, close, just=FD:conc]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ]
+  ]
+\end{prooftree}
+
+\begin{prooftree}
+  {
+    to prove={E \lif F, F \lif E \sststile{}{} E \vee F}
+  }
+  [\vver{v} E \lif F, name=prem1
+    [\vver{v} F \lif E, name=prem2
+      [\vver{f} E \vee F, name=conc
+        [\vver{f} E, just=FD:conc, name=fdconc
+          [\vver{f} F, just=FD:conc
+            [\vver{f} F, just=VI:prem2, name=viprem2
+              [\vver{f} E, just=VI:prem1]
+              [\vver{v} F, close={:viprem2,!c}, just=VI:prem1]
+            ]
+            [\vver{v} E, close={:fdconc,!c}, just=VI:prem2]
+          ]
+        ]
+      ]
+    ]
+  ]
+\end{prooftree}
+
+% \item
+\begin{prooftree}
+  {
+    to prove={(G \vee H) \lif (G \wedge H), \lnot (G \wedge H) \sststile{}{} \lnot (G \vee H)}
+  }
+  [\vver{v} (G \vee H) \lif (G \wedge H), name=prem1
+    [\vver{v} \lnot (G \wedge H), name=prem2
+      [\vver{f} \lnot (G \vee H), name=conc
+        [\vver{f} (G \wedge H), just=NG:prem2, name=negprem2
+          [\vver{v} (G \vee H), just=NG:conc, name=negcon
+            [\vver{f} (G \vee H), just=VI:prem1, close={:negcon,!c}]
+            [\vver{v} (G \wedge H), just=VI:prem1, close={:negprem2,!c}]
+          ]
+        ]
+      ]
+    ]
+  ]
+\end{prooftree}
+
+% \item
+\begin{prooftree}
+  {
+    to prove={(I \vee J) \lif (I \wedge J), \lnot(I \vee J) \sststile{}{} \lnot (I \wedge J)}
+  }
+  [\vver{v} (I \vee J) \lif (I \wedge J), name=prem1
+    [\vver{v} \lnot(I \vee J), name=prem2
+      [\vver{f} \lnot (I \wedge J), name=conc
+        [\vver{f} I \vee J, name=ngprem1, just=NG:prem2
+          [\vver{v} I \wedge J, name=ngconc, just=NG:conc
+            [\vver{f} I, just=FD:ngprem1, name=faldisant
+              [\vver{f} J, just=FD:ngprem1, name=faldiscon
+                [\vver{v} I, just=VC:ngconc, close={:faldisant,!c}
+                  [\vver{v} J, just=VC:ngconc, close={:faldiscon,!c}
+                    % [\vver{f} I \vee J, name=viprem1ant, just=VI:prem1
+                    %   [\vver{f} I, just=FD:viprem1ant
+                    %     [\vver{f} J, just=FD:viprem1ant, close={,!c}]
+                    %   ]
+                    % ]
+                    % [\vver{v} I \wedge J, name=viprem1con, just=VI:prem1
+                    %   [\vver{v} I, just=VC:viprem1con
+                    %     [\vver{v} J, just=VC:viprem1con, close={,!c}]
+                    %   ]
+                    % ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ]
+  ]
+\end{prooftree}
+
+% \item
+\begin{prooftree}
+  {
+    to prove={K \vee L, K \sststile{}{} \lnot L }
+  }
+  [\vver{v} K \vee L, name=prem1, just=Premisa
+    [\vver{v} K, name=prem2, just=Premisa
+      [\vver{f} \lnot L, name=conc, just=Conclusión
+        [\vver{v} K, just=VD:prem1, name=vdPrem1]
+        [\vver{v} L, just=VD:prem1, close={:vdPrem1,!c}]
+      ]
+    ]
+  ]
+\end{prooftree}
+
+% \item
+\begin{prooftree}
+  {
+    to prove={M \vee (N \wedge \lnot N), M \sststile{}{} \lnot(N \wedge \lnot N)}
+  }
+  [\vver{v} M \vee (N \wedge \lnot N), name=prem1, just=Premisa
+    [\vver{v} M, name=prem2,just=Premisa
+      [\vver{f} \lnot (N \wedge \lnot N), name=conc,just=Conclusión
+        [\vver{v} N \wedge \lnot N, just=DN:conc, name=dnConc
+          [\vver{v} N, just=VC:dnConc
+            [\vver{v} \lnot N, just=VC:dnConc]
+          ]
+        ]
+      ]
+    ]
+  ]
+\end{prooftree}
+
+% \item
+\begin{prooftree}
+  {
+    to prove={(O \vee P) \lif Q, Q \lif (O \wedge P) \sststile{}{} (O \vee P) \lif (O \wedge P)}
+  }
+  [\vver{v} (O \vee P) \lif Q, name=prem1,just=Premisa
+    [\vver{v} Q \lif (O \wedge P), name=prem2,just=Premisa
+      [\vver{f} (O \vee P) \lif (O \wedge P), name=conc,just=Conclusión
+        [\vver{v} O \vee P, just=FI:conc, name=fiConcAnt
+          [\vver{f} O \wedge P, just=FI:conc, name=fiConcCon
+            [\vver{f} O \vee P, close={:fiConcAnt,!c}, just=VI:prem1]
+            [\vver{v} Q, just=VI:prem1, name=viPrem1
+              [\vver{f} Q, close={:viPrem1,!c}]
+              [\vver{v} O \wedge P, close={:fiConcCon,!c}]
+            ]
+          ]
+        ]
+      ]
+    ]
+  ]
+\end{prooftree}
+
+% \item
+\begin{prooftree}
+  {
+    to prove={(R \vee S) \lif T, T \lif (R \wedge S) \sststile{}{} (R \wedge S) \lif (R \vee S)}
+  }
+  [\vver{v} (R \vee S) \lif T, name=prem1,just=Premisa
+    [\vver{v} T \lif (R \wedge S), name=prem2,just=Premisa
+      [\vver{f} (R \wedge S) \lif (R \vee S), name=conc,just=Conclusión
+        [\vver{v} R \wedge S, just=FI:conc
+          [\vver{f} R \vee S, just=FI:conc
+            [\vver{f} R \vee S, just=VI:prem1]
+            [\vver{v} T, just=VI:prem1, name=viprem1
+              [\vver{f} T, just=VI:prem2, close={:viprem1,!c}]
+              [\vver{v} R \wedge S, just=VI:prem2]
+            ]
+          ]
+        ]
+      ]
+    ]
+  ]
+\end{prooftree}
+
+% \item
+\begin{prooftree}
+  {
+    to prove={U \lif (V \vee W), (V \wedge W) \lif \lnot U \sststile{}{} \lnot U}
+  }
+  [\vver{v} U \lif (V \vee W), name=prem1,just=Premisa
+    [\vver{v} (V \wedge W) \lif \lnot U, name=prem2, just=Premisa
+      [\vver{f} \lnot U, name=conc,just=Conclusión
+        [\vver{f} V \wedge W, just=VI:prem2
+          [\vver{f} U, just=VI:prem1, close={:conc,!c}]
+          [\vver{v} V \vee W, just=VI:prem1]
+        ]
+        [\vver{v} \lnot U, close={:conc,!c}]
+      ]
+    ]
+  ]
+\end{prooftree}
+
+
+\end{document}
