@@ -1,5 +1,6 @@
 %\documentclass[border=10pt,tikz,letter]{standalone}
-\documentclass[10pt,british,letter]{ltxdoc}
+% \documentclass[10pt,british,letter]{ltxdoc}
+\documentclass[10pt,spanish,letter]{ltxdoc}
 \usepackage{prooftrees,turnstile}
 \newcommand*{\lif}{\ensuremath{\mathbin{\rightarrow}}}
 
@@ -29,21 +30,10 @@
   [\vver{v} (C \vee D) \lif (C \wedge D), just=Premisa, name=p1
     [\vver{v} C \wedge D, just=Premisa, name=p2
       [\vver{f} C \vee D, just=Conclusión, name=conc
-        [\vver{f} C \vee D, just=VI:p1, name=via
-          [\vver{f} C, just=FD:via
-            [\vver{f} D, just=FD:via
-              [\vver{v} C, just=VC:p2
-                [\vver{v} D, close, just=VC:p2]
-              ]
-            ]
-          ]
-        ]
-        [\vver{v} C \wedge D, just=VI:p1, name=vic
-          [\vver{v} C, just=VC:vic
-            [\vver{v} D, just=VC:vic
-              [\vver{f} C, just=FD:conc
-                [\vver{f} D, close, just=FD:conc]
-              ]
+        [\vver{v} C, just=VC:p2, name=vcP2Ant
+          [\vver{v} D, just=VC:p2, name=vcP2Con
+            [\vver{f} C, just=FD:conc, close={:vcP2Ant,!c}
+              [\vver{f} D, just=FD:conc, close={:vcP2Con,!c}]
             ]
           ]
         ]
@@ -151,8 +141,8 @@
     [\vver{v} M, name=prem2,just=Premisa
       [\vver{f} \lnot (N \wedge \lnot N), name=conc,just=Conclusión
         [\vver{v} N \wedge \lnot N, just=DN:conc, name=dnConc
-          [\vver{v} N, just=VC:dnConc
-            [\vver{v} \lnot N, just=VC:dnConc]
+          [\vver{v} N, just=VC:dnConc, name=vcDnConc
+            [\vver{v} \lnot N, just=VC:dnConc, close={:vcDnConc,!c}]
           ]
         ]
       ]
@@ -173,7 +163,7 @@
             [\vver{f} O \vee P, close={:fiConcAnt,!c}, just=VI:prem1]
             [\vver{v} Q, just=VI:prem1, name=viPrem1
               [\vver{f} Q, close={:viPrem1,!c}]
-              [\vver{v} O \wedge P, close={:fiConcCon,!c}]
+              [\vver{v} O \wedge P, close={:fiConcCon,!c}, just=VI:prem1]
             ]
           ]
         ]
@@ -204,7 +194,6 @@
   ]
 \end{prooftree}
 
-% \item
 \begin{prooftree}
   {
     to prove={U \lif (V \vee W), (V \wedge W) \lif \lnot U \sststile{}{} \lnot U}

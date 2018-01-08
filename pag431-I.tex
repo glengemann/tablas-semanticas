@@ -7,23 +7,25 @@
 
 \begin{document}
 
-\begin{prooftree}
-{
-to prove={\{P \vee (Q \vee \lnot R), P \lif \lnot R, Q \lif \lnot R\} \sststile{}{} \lnot R}
-}
-[P \vee (Q \vee \lnot R),  just=Ass, checked
-[P \lif \lnot R,  just=Ass, checked
-  [Q \lif \lnot R,  just=Ass, checked, name=last premise
-    [\lnot\lnot R, just={$\lnot$ Conc}, name=not conc
-      [P,  just={$\vee$ Elim:!uuuu}
-        [\lnot P, close={:!u,!c}]
-        [\lnot R,  close={:not conc,!c}, just={$\lif$ Elim:!uuuu}]]
-      [Q \vee \lnot R
-        [Q, move by=1
-          [\lnot Q, close={:!u,!c}]
-          [\lnot R,  close={:not conc,!c}, just={$\lif$ Elim:last premise}]]
-        [\lnot R, close={:not conc,!c}, move by=1, just={$\vee$ Elim:!u}]]]]]]
-\end{prooftree}
+Pruebe la invalidez de los siguientes argumentos.
+
+% \begin{prooftree}
+% {
+% to prove={\{P \vee (Q \vee \lnot R), P \lif \lnot R, Q \lif \lnot R\} \sststile{}{} \lnot R}
+% }
+% [P \vee (Q \vee \lnot R),  just=Ass, checked
+% [P \lif \lnot R,  just=Ass, checked
+%   [Q \lif \lnot R,  just=Ass, checked, name=last premise
+%     [\lnot\lnot R, just={$\lnot$ Conc}, name=not conc
+%       [P,  just={$\vee$ Elim:!uuuu}
+%         [\lnot P, close={:!u,!c}]
+%         [\lnot R,  close={:not conc,!c}, just={$\lif$ Elim:!uuuu}]]
+%       [Q \vee \lnot R
+%         [Q, move by=1
+%           [\lnot Q, close={:!u,!c}]
+%           [\lnot R,  close={:not conc,!c}, just={$\lif$ Elim:last premise}]]
+%         [\lnot R, close={:not conc,!c}, move by=1, just={$\vee$ Elim:!u}]]]]]]
+% \end{prooftree}
 
 \begin{prooftree}
 {
@@ -33,15 +35,14 @@ to prove={\{P \vee (Q \vee \lnot R), P \lif \lnot R, Q \lif \lnot R\} \sststile{
   [\vver{v} (\exists x) Cx \wedge Bx, name=prem2
     [\vver{f} (\forall x) Cx \lif \lnot Ax, name=conc
       [\vver{v} Aa \wedge Ba, just=VP:prem1, name=vpprem1
-        [\vver{v} Ca \wedge Ba, just=VP:prem2, name=vpprem2
-          [\vver{f} Ca \lif \lnot Aa, just=FG:conc, name=fgconc
-            [\vver{v} Ca, just=FI:fgconc, name=fifgconc
-              [\vver{f} \lnot Aa, just=FI:fgconc, name=fifgconccon
-                [\vver{v} Aa, just=VC:vpprem1
-                  [\vver{v} Ba, just=VC:vpprem1
-                    [\vver{v} Ca, just=VC:vpprem2
-                      [\vver{v} Ba, just=VC:vpprem2
-                      ]
+        [\vver{v} Cb \wedge Bb, just=VP:prem2, name=vpprem2
+          [\vver{f} Cc \lif \lnot Ac, just=FG:conc, name=fgconc
+            [\vver{v} Aa, just=VC:vpprem1
+              [\vver{v} Ba, just=VC:vpprem1
+                [\vver{v} Cb, just=VC:vpprem2
+                  [\vver{v} Bb, just=VC:vpprem2
+                    [\vver{v} Cc, just=FI:fgconc
+                      [\vver{f} \lnot Aa, just=FI:fgconc]
                     ]
                   ]
                 ]
@@ -54,5 +55,39 @@ to prove={\{P \vee (Q \vee \lnot R), P \lif \lnot R, Q \lif \lnot R\} \sststile{
   ]
 ]
 \end{prooftree}
+
+
+\begin{prooftree}
+{
+  to prove={(\forall x) Dx \lif \lnot Ex, (\forall x) Ex \lif Fx \sststile{}{} (\forall x) Fx \lif \lnot Dx}
+}
+[\vver{v} (\forall x) Dx \lif \lnot Ex, name=prem1
+  [\vver{v} (\forall x) Ex \lif Fx, name=prem2
+    [\vver{f} (\forall x) Fx \lif \lnot Dx, name=conc
+      [\vver{v} Da \lif \lnot Ea, just=VG:prem1, name=vpprem1
+        [\vver{v} Ea \lif Fa, just=VG:prem2, name=vpprem2
+          [\vver{f} Fa \lif \lnot Da, just=FG:conc, name=fgconc
+            [\vver{v} Fa, just=FI:fgconc, name=fifgconcant
+              [\vver{f} \lnot Da, just=FI:fgconc, name=fifgconccon
+                [\vver{f} Da, just=VI:vpprem1, close={:fifgconccon,!c}]
+                [\vver{v} \lnot Ea, just=VI:vpprem1
+                    [\vver{f} Ea, just=VI:VI:vpprem2]
+                    [\vver{v} Fa, just=VI:vpprem2]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ]
+  ]
+]
+\end{prooftree}
+\newline
+I=\langle U, D^*,E^*,F^* \rangle \newline
+U=\{a\} \newline
+D^*=\{a\} \newline
+E^*=\{a\} \newline
+F^*=\{a\} \newline
 
 \end{document}

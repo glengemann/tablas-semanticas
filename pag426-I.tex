@@ -1,0 +1,254 @@
+%\documentclass[border=10pt,tikz,letter]{standalone}
+\documentclass[10pt,spanish,letter]{ltxdoc}
+\usepackage{prooftrees,turnstile}
+\newcommand*{\lif}{\ensuremath{\mathbin{\rightarrow}}}
+
+\newcommand\vver[1]{\textcolor{red}{\textit{#1 }}}
+
+\begin{document}
+
+Ejercicios: I. Construya una prueba formal de la validez de cada uno de los
+siguientes ejercicios:
+
+% \begin{prooftree}
+% {
+% to prove={\{P \vee (Q \vee \lnot R), P \lif \lnot R, Q \lif \lnot R\} \sststile{}{} \lnot R}
+% }
+% [P \vee (Q \vee \lnot R),  just=Ass, checked
+% [P \lif \lnot R,  just=Ass, checked
+%   [Q \lif \lnot R,  just=Ass, checked, name=last premise
+%     [\lnot\lnot R, just={$\lnot$ Conc}, name=not conc
+%       [P,  just={$\vee$ Elim:!uuuu}
+%         [\lnot P, close={:!u,!c}]
+%         [\lnot R,  close={:not conc,!c}, just={$\lif$ Elim:!uuuu}]]
+%       [Q \vee \lnot R
+%         [Q, move by=1
+%           [\lnot Q, close={:!u,!c}]
+%           [\lnot R,  close={:not conc,!c}, just={$\lif$ Elim:last premise}]]
+%         [\lnot R, close={:not conc,!c}, move by=1, just={$\vee$ Elim:!u}]]]]]]
+% \end{prooftree}
+
+% \begin{prooftree}
+% {
+%   to prove={(\exists x) Ax \wedge Bx, (\exists x) Cx \wedge Bx \sststile{}{} (\forall x) Cx \lif \lnot Ax}
+% }
+% [\vver{v} (\exists x) Ax \wedge Bx, name=prem1
+%   [\vver{v} (\exists x) Cx \wedge Bx, name=prem2
+%     [\vver{f} (\forall x) Cx \lif \lnot Ax, name=conc
+%       [\vver{v} Aa \wedge Ba, just=VP:prem1, name=vpprem1
+%         [\vver{v} Ca \wedge Ba, just=VP:prem2, name=vpprem2
+%           [\vver{f} Ca \lif \lnot Aa, just=FG:conc, name=fgconc
+%             [\vver{v} Ca, just=FI:fgconc, name=fifgconc
+%               [\vver{f} \lnot Aa, just=FI:fgconc, name=fifgconccon
+%                 [\vver{v} Aa, just=VC:vpprem1
+%                   [\vver{v} Ba, just=VC:vpprem1
+%                     [\vver{v} Ca, just=VC:vpprem2
+%                       [\vver{v} Ba, just=VC:vpprem2
+%                       ]
+%                     ]
+%                   ]
+%                 ]
+%               ]
+%             ]
+%           ]
+%         ]
+%       ]
+%     ]
+%   ]
+% ]
+% \end{prooftree}
+
+\begin{prooftree}
+{
+  to prove={(\forall x) Ax \lif  \lnot Bx, (\exists x) Cx \wedge Ax \sststile{}{} (\exists x) Cx \wedge \lnot Bx}
+}
+[\vver{v} (\forall x) Ax \lif  \lnot Bx, name=prem1
+  [\vver{v} (\exists x) Cx \wedge Ax, name=prem2
+    [\vver{f} (\exists x) Cx \wedge \lnot Bx, name=conc
+      [\vver{v} Aa \lif  \lnot Ba, just=VG:prem1, name=vgPrem1
+        [\vver{v} Ca \wedge Aa, just=VP:prem2, name=vpPrem2
+          [\vver{f} Ca \wedge \lnot Ba, just=FP:conc, name=fpConc
+            [\vver{v} Ca, just=VC:vpPrem2, name=vpPrem2Ant
+              [\vver{v} Aa, just=VC:vpPrem2, name=vpPrem2Con
+                [\vver{f} Aa, just=VI:vgPrem1, close={:vpPrem2Con,!c}]
+                [\vver{v} \lnot Ba, just=VI:vgPrem1, name=viVgPrem1Cons
+                  [\vver{f} Ca, just=FC:fpConc, close={:vpPrem2Ant,!c}]
+                  [\vver{f} \lnot Ba, just=FC:fpConc, close={:viVgPrem1Cons,!c}]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ]
+  ]
+]
+\end{prooftree}
+
+\begin{prooftree}
+{
+  to prove={(\forall x) Dx \lif \lnot Ex, (\forall x) Fx \lif Ex \sststile{}{} (\forall x) Fx \lif \lnot Dx}
+}
+[\vver{v} (\forall x) Dx \lif \lnot Ex, name=prem1
+  [\vver{v} (\forall x) Fx \lif Ex, name=prem2
+    [\vver{f} (\forall x) Fx \lif \lnot Dx, name=conc
+      [\vver{v} Da \lif \lnot Ea, just=VG:prem1, name=vgPrem1
+        [\vver{v} Fa \lif Ea, just=VG:prem2, name=vgPrem2
+          [\vver{f} Fa \lif \lnot Da, just=FG:conc, name=fgConc
+            [\vver{v} Fa, just=FI:fgConc, name=fiConcAnt
+              [\vver{f} \lnot Da, just=FI:fgConc, name=fiConcCons
+                [\vver{f} Fa, just=VI:vgPrem2, name=viPrem2Ant, close={:fiConcAnt,!c}]
+                [\vver{v} Ea, just=VI:vgPrem2, name=viPrem2Cons
+                  [\vver{f} Da, close={:fiConcCons,!c}, just=VI:vgPrem1]
+                  [\vver{v} \lnot Ea, close={:viPrem2Cons,!c}, just=VI:vgPrem1]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ]
+  ]
+]
+\end{prooftree}
+
+\begin{prooftree}
+{
+  to prove={(\forall x) Gx \lif Hx, (\forall x) Ix \lif \lnot Hx \sststile{}{} (\forall x) Ix \lif \lnot Gx}
+}
+[\vver{v} (\forall x) Gx \lif Hx, name=prem1
+  [\vver{v} (\forall x) Ix \lif \lnot Hx, name=prem2
+    [\vver{f} (\forall x) Ix \lif \lnot Gx, name=conc
+      [\vver{v} Ga \lif Ha, just=VG:prem1, name=vgPrem1
+        [\vver{v} Ia \lif \lnot Ha, just=VG:prem2, name=vgPrem2
+          [\vver{f} Ia \lif \lnot Ga, just=FG:conc, name=fgConc
+            [\vver{v} Ia, just=FI:fgConc, name=fiConcAnt
+              [\vver{f} \lnot Ga, just=FI:fgConc, name=fiConcCons
+                [\vver{f} Ia, just=VI:vgPrem2, name=viPrem2Ant, close={:fiConcAnt,!c}]
+                [\vver{v} \lnot Ha, just=VI:vgPrem2, name=viPrem2Cons
+                  [\vver{f} Ga, close={:fiConcCons,!c}, just=VI:vgPrem1]
+                  [\vver{v} Ha, close={:viPrem2Cons,!c}, just=VI:vgPrem1]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ]
+  ]
+]
+\end{prooftree}
+
+% 4
+\begin{prooftree}
+{
+  to prove={(\exists x) Jx \wedge Kx, (\forall x) Jx \lif Lx \sststile{}{} (\exists x) Lx \wedge \lnot Kx}
+}
+[\vver{v} (\exists x) Jx \wedge Kx, name=prem1
+  [\vver{v} (\forall x) Jx \lif Lx, name=prem2
+    [\vver{f} (\exists x) Lx \wedge \lnot Kx, name=conc
+      [\vver{v} Ja \wedge Ka, just=VG:prem1, name=vgPrem1
+        [\vver{v} Ja \lif La, just=VG:prem2, name=vgPrem2
+          [\vver{f} La \wedge \lnot Ka, just=FP:conc, name=fgConc
+            [\vver{v} Ja, just=VC:vgPrem1, name=Prem1Ant
+              [\vver{v} Ka, just=VC:vgPrem1, name=Prem1Cons
+                [\vver{f} Ja, just=VI:vgPrem2, name=vgPrem2Ant, close={:Prem1Ant,!c}]
+                [\vver{v} La, just=VI:vgPrem2, name=vgPrem2Cons
+                  [\vver{f} La, just=FC:fgConc, close={:vgPrem2Cons,!c}]
+                  [\vver{f} \lnot Ka, just=FC:fgConc]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ]
+  ]
+]
+\end{prooftree}
+
+% 5
+\begin{prooftree}
+{
+  to prove={(\forall x) Mx \lif Nx, (\exists x) Mx \wedge Ox \sststile{}{} (\exists x) Ox \wedge Nx}
+}
+[\vver{v} (\forall x) Mx \lif Nx, name=prem1
+  [\vver{v} (\exists x) Mx \wedge Ox, name=prem2
+    [\vver{f} (\exists x) Ox \wedge Nx, name=conc
+      [\vver{v} Ma \wedge Oa, just=VP:prem2, name=vgPrem2
+        [\vver{v} Ma, just=VC:vgPrem2, name=vgPrem2Ant
+          [\vver{v} Oa, just=VC:vgPrem2, name=vgPrem2Conc
+            [\vver{v} Ma \lif Na, just=VG:prem1, name=vgPrem1
+              [\vver{f} Ma, just=VI:vgPrem1, close={:vgPrem2Ant,!c}]
+              [\vver{v} Na, just=VI:vgPrem1, name=viPrem1Conc
+                [\vver{f} Oa \wedge Na, just=FP:conc, name=fpConc
+                  [\vver{f} Oa, just=FC:fpConc, close={:vgPrem2Conc,!c}]
+                  [\vver{f} Na, just=FC:fpConc, close={:viPrem1Conc,!c}]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ]
+  ]
+]
+\end{prooftree}
+
+6
+\begin{prooftree}
+{
+  to prove={(\exists x) Px \wedge \lnot Qx, (\forall x) Px \lif Rx \sststile{}{} (\exists x) Rx \wedge \lnot Qx}
+}
+[\vver{v} (\exists x) Px \wedge \lnot Qx, name=prem1
+  [\vver{v} (\forall x) Px \lif Rx, name=prem2
+    [\vver{f} (\exists x) Rx \wedge \lnot Qx, name=conc
+      [\vver{v} Pa \wedge \lnot Qa, just=VP:prem1, name=vgPrem1
+        [\vver{v} Pa, just=VC:vgPrem1, name=vgPrem1Ant
+          [\vver{v} \lnot Qa, just=VC:vgPrem1, name=vgPrem1Conc
+            [\vver{v} Pa \lif Ra, just=VG:prem2, name=vgPrem2
+              [\vver{f} Pa, just=VI:vgPrem2, close={:vgPrem1Ant,!c}]
+              [\vver{v} Ra, just=VI:vgPrem2, name=vgPrem2Cons
+                [\vver{f} Ra \wedge \lnot Qa, just=FP:conc, name=fpConc
+                  [\vver{f} Ra, just=FC:fpConc, close={:vgPrem2Cons,!c}]
+                  [\vver{f} \lnot Qa, just=FC:fpConc, close={:vgPrem1Conc,!c}]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ]
+  ]
+]
+\end{prooftree}
+
+7
+\begin{prooftree}
+{
+  to prove={(\forall x) Sx \lif \lnot Tx, (\exists x) Sx \wedge Ux \sststile{}{} (\exists x) Ux \wedge \lnot Tx}
+}
+[\vver{v} (\forall x) Sx \lif \lnot Tx, name=prem1
+  [\vver{v} (\exists x) Sx \wedge Ux, name=prem2
+    [\vver{f} (\exists x) Ux \wedge \lnot Tx, name=conc
+      [\vver{v} Sa \wedge Ua, just=VP:prem2, name=vgPrem2
+        [\vver{v} Sa, just=VC:vgPrem2, name=vgPrem2Ant
+          [\vver{v} Ua, just=VC:vgPrem2, name=vgPrem2Cons
+            [\vver{v} Sa \lif \lnot Ta, just=VG:prem1, name=vgPrem1
+              [\vver{f} Sa, just=VI:vgPrem1, close={:vgPrem2Ant,!c}]
+              [\vver{v} \lnot Ta, just=VI:vgPrem1, name=vgPrem1Conc
+                [\vver{f} Ua \wedge \lnot Ta, just=FP:conc, name=fpConc
+                  [\vver{f} Ua, just=FC:fpConc, close={:vgPrem2Cons,!c}]
+                  [\vver{f} \lnot Ta, just=FC:fpConc, close={:vgPrem1Conc,!c}]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ]
+  ]
+]
+\end{prooftree}
+
+\end{document}
