@@ -7,6 +7,9 @@
 
 \begin{document}
 
+Ejercicios del capítulo 10.4 Pruebas de validez, Introducción a la lógica, Irving
+M. Copi; Carl Cohen.
+
 Ejercicios: I. Construya una prueba formal de la validez de cada uno de los
 siguientes ejercicios:
 
@@ -242,6 +245,113 @@ siguientes ejercicios:
                   [\vver{f} \lnot Ta, just=FC:fpConc, close={:vgPrem1Conc,!c}]
                 ]
               ]
+            ]
+          ]
+        ]
+      ]
+    ]
+  ]
+]
+\end{prooftree}
+
+8
+\begin{prooftree}
+{
+  to prove={(\forall x) Vx \lif Wx, (\forall x) Wx \lif \lnot Xx \sststile{}{} (\forall x) Xx \lif \lnot Vx}
+}
+[\vver{v} (\forall x) Vx \lif Wx, name=prem1
+  [\vver{v} (\forall x) Wx \lif \lnot Xx, name=prem2
+    [\vver{f} (\forall x) Xx \lif \lnot Vx, name=conc
+      [\vver{f} Xa \lif \lnot Va, just=VG:conc, name=vgConc
+        [\vver{v} Xa, just=VI:vgConc, name=viConcAnt
+          [\vver{f} \lnot Va, just=VI:vgConc, name=viConcCons
+            [\vver{v} Wa \lif \lnot Xa, just=VG:prem2, name=vgPrem2
+              [\vver{f} Wa, just=VI:vgPrem2
+                [\vver{v} Va \lif Wa, just=FP:prem1, name=fpPrem1
+                  [\vver{f} Va, just=VI:fpPrem1, close={:viConcCons,!c}]
+                  [\vver{v} Wa, just=VI:fpPrem1, close={:vgPrem2,!c}]
+                ]
+              ]
+              [\vver{v} \lnot Xa, just=VI:vgPrem2, close={:viConcAnt,!c}]
+            ]
+          ]
+        ]
+      ]
+    ]
+  ]
+]
+\end{prooftree}
+
+9
+\begin{prooftree}
+{
+  to prove={(\exists x) Yx \wedge Zx, (\forall x) Zx \lif Ax \sststile{}{} (\exists x) Ax \wedge Yx}
+}
+[\vver{v} (\exists x) Yx \wedge Zx, name=prem1
+  [\vver{v} (\forall x) Zx \lif Ax, name=prem2
+    [\vver{f} (\exists x) Ax \wedge Yx, name=conc
+      [\vver{v} Ya \wedge Za, just=VP:prem1, name=vpPrem1
+        [\vver{v} Ya, just=VC:vpPrem1, name=vcPrem1Ant
+          [\vver{v} Za, just=VC:vpPrem1, name=vcPrem1Cons
+            [\vver{v} Za \lif Aa, just=VC:prem2, name=vcPrem2
+              [\vver{f} Za, just=VI:vcPrem2, close={:vcPrem1Cons,!c}]
+              [\vver{v} Aa, just=VI:vcPrem2, name=vpPrem2Cons
+                [\vver{v} Aa \wedge Ya, just=FP:conc, name=fpConc
+                  [\vver{f} Aa, just=VI:fpConc, close={:vpPrem2Cons,!c}]
+                  [\vver{f} Ya, just=VI:fpConc, close={:vcPrem1Ant,!c}]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ]
+  ]
+]
+\end{prooftree}
+
+10
+\begin{prooftree}
+{
+  to prove={(\forall x) Bx \lif \lnot Cx, (\exists x) Cx \wedge Dx \sststile{}{} (\exists x) Dx \wedge \lnot Bx}
+}
+[\vver{v} (\forall x) Bx \lif \lnot Cx, name=prem1
+  [\vver{v} (\exists x) Cx \wedge Dx, name=prem2
+    [\vver{f} (\exists x) Dx \wedge \lnot Bx, name=conc
+      [\vver{v} Ca \wedge Da, just=VP:prem2, name=vpPrem2
+        [\vver{v} Ca, just=VC:vpPrem2, name=VCPrem2Ant
+          [\vver{v} Da, just=VC:vpPrem2, name=VCPrem2Cons
+            [\vver{v} Ba \lif \lnot Ca, just=VG:prem1, name=vgPrem1
+              [\vver{f} Ba, just=VI:vgPrem1, name=vgPrem1Ant
+                [\vver{f} Da \wedge \lnot Ba, just=FP:conc, name=fpConc
+                  [\vver{f} Da, just=FC:fpConc, close={:VCPrem2Cons,!c}]
+                  [\vver{f} \lnot Ba, just=FC:fpConc, close={:vgPrem1Ant,!c}]
+                ]
+              ]
+              [\vver{v} \lnot Ca, just=VI:vgPrem1, name=vgPrem1Cons, close={:VCPrem2Ant,!c}]
+            ]
+          ]
+        ]
+      ]
+    ]
+  ]
+]
+\end{prooftree}
+
+11
+\begin{prooftree}
+{
+  to prove={(\forall x) Fx \lif Gx, (\exists x) Fx \wedge \lnot Gx \sststile{}{} (\exists x) Gx \wedge \lnot Fx}
+}
+[\vver{v} (\forall x) Fx \lif Gx, name=prem1
+  [\vver{v} (\exists x) Fx \wedge \lnot Gx, name=prem2
+    [\vver{f} (\exists x) Gx \wedge \lnot Fx, name=conc
+      [\vver{v} Fa \wedge \lnot Ga, just=VP:prem2, name=vpPrem2
+        [\vver{v} Fa, just=VC:vpPrem2, name=vcPrem2Ant
+          [\vver{v} \lnot Ga, just=VC:vpPrem2, name=vcPrem2Cons
+            [\vver{v} Fa \lif Ga, just=VG:prem1, name=vgPrem1
+              [\vver{f} Fa, just=VI:vgPrem1, close={:vcPrem2Ant,!c}]
+              [\vver{v} Ga, just=VI:vgPrem1, close={:vcPrem2Cons,!c}]
             ]
           ]
         ]
