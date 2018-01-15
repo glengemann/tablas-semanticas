@@ -27,6 +27,7 @@ Pruebe la invalidez de los siguientes argumentos.
 %         [\lnot R, close={:not conc,!c}, move by=1, just={$\vee$ Elim:!u}]]]]]]
 % \end{prooftree}
 
+1
 \begin{prooftree}
 {
   to prove={(\exists x) Ax \wedge Bx, (\exists x) Cx \wedge Bx \sststile{}{} (\forall x) Cx \lif \lnot Ax}
@@ -42,7 +43,7 @@ Pruebe la invalidez de los siguientes argumentos.
                 [\vver{v} Cb, just=VC:vpprem2
                   [\vver{v} Bb, just=VC:vpprem2
                     [\vver{v} Cc, just=FI:fgconc
-                      [\vver{f} \lnot Aa, just=FI:fgconc]
+                      [\vver{f} \lnot Ac, just=FI:fgconc]
                     ]
                   ]
                 ]
@@ -56,7 +57,7 @@ Pruebe la invalidez de los siguientes argumentos.
 ]
 \end{prooftree}
 
-
+2
 \begin{prooftree}
 {
   to prove={(\forall x) Dx \lif \lnot Ex, (\forall x) Ex \lif Fx \sststile{}{} (\forall x) Fx \lif \lnot Dx}
@@ -84,10 +85,115 @@ Pruebe la invalidez de los siguientes argumentos.
 ]
 \end{prooftree}
 \newline
-I=\langle U, D^*,E^*,F^* \rangle \newline
+I=$\langle U, D^{*},E^{*},F^{*} \rangle$ \newline
 U=\{a\} \newline
-D^*=\{a\} \newline
-E^*=\{a\} \newline
-F^*=\{a\} \newline
+$D^{*}$=\{a\} \newline
+$E^{*}$=\{a\} \newline
+$F^{*}$=\{a\} \newline
+
+3
+\begin{prooftree}
+{
+  to prove={(\forall x) Gx \lif Hx, (\forall x) Gx \lif Ix \sststile{}{} (\forall x) Ix \lif Hx}
+}
+[\vver{v} (\forall x) Gx \lif Hx, name=prem1
+  [\vver{v} (\forall x) Gx \lif Ix, name=prem2
+    [\vver{f} (\forall x) Ix \lif Hx, name=conc
+      [\vver{f} Ia \lif Ha, just=FG:conc, name=fgConc
+        [\vver{v} Ia, just=FI:fgConc, name=fiConcAnt
+          [\vver{f} Ha, just=FI:fgConc, name=fiConcCons
+            [\vver{v} Ga \lif Ha, just=VG:prem1
+              [\vver{f} Ga
+                [\vver{v} Ga \lif Ia
+                  [\vver{f} Ga]
+                  [\vver{v} Ia]
+                ]
+              ]
+              [\vver{v} Ha, close={:fiConcCons,!c}]
+            ]
+          ]
+        ]
+      ]
+    ]
+  ]
+]
+\end{prooftree}
+\newline
+I=$\langle U, G^{*},H^{*},I^{*} \rangle$ \newline
+U=\{a\} \newline
+$G^{*}$=\{$\emptyset$\} \newline
+$H^{*}$=\{$\emptyset$\} \newline
+$I^{*}$=\{a\} \newline
+
+4
+\begin{prooftree}
+{
+  to prove={(\exists x) Jx \wedge Kx, (\exists x) Kx \wedge Lx \sststile{}{} (\exists x) Lx \wedge Jx}
+}
+[\vver{v} (\exists x) Jx \wedge Kx, name=prem1
+  [\vver{v} (\exists x) Kx \wedge Lx, name=prem2
+    [\vver{f} (\exists x) Lx \wedge Jx, name=conc
+      [\vver{v} Ja \wedge Ka, just=VP:prem1, name=vpPrem1
+        [\vver{v} Ja, just=VC:vpPrem1
+          [\vver{v} Ka, just=VC:vpPrem1
+            [\vver{v} Kb \wedge Lb, just=VP:prem2, name=vpPrem2
+              [\vver{v} Kb, just=VC:vpPrem2
+                [\vver{v} Lb, just=VC:vpPrem2, name=vcPrem2Cons
+                  [\vver{f} Lb \wedge Jb, just=FP:conc, name=fpConc
+                    [\vver{f} Lb, just=FC:fpConc, close={:vcPrem2Cons,!c}]
+                    [\vver{f} Jb, just=FC:fpConc]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ]
+  ]
+]
+\end{prooftree}
+\newline
+I=$\langle U, G^{*},H^{*},I^{*} \rangle$ \newline
+U=\{a\} \newline
+$G^{*}=\{\emptyset\}$ \newline
+$H^{*}=\{\emptyset\}$ \newline
+$I^{*}=\{a\}$ \newline
+
+5
+\begin{prooftree}
+{
+  to prove={(\exists x) Mx \wedge Nx, (\exists x) Mx \wedge Ox \sststile{}{} (\forall x) Ox \lif Nx}
+}
+[\vver{v} (\exists x) Mx \wedge Nx, name=prem1
+  [\vver{v} (\exists x) Mx \wedge Ox, name=prem2
+    [\vver{f} (\forall x) Ox \lif Nx, name=conc
+      [\vver{f} Oa \lif Na, just=FG:conc, name=fgConc
+        [\vver{v} Oa, just=FI:fgConc
+          [\vver{f} Na, just=FI:fgConc
+            [\vver{v} Mb \wedge Nb, just=VP:prem1, name=vpPrem1
+              [\vver{v} Mb, just=VC:vpPrem1
+                [\vver{v} Nb, just=VC:vpPrem1, name=vcPrem1Cons
+                  [\vver{v} Mc \wedge Oc, just=VP:prem2, name=vpPrem2
+                    [\vver{v} Mc, just=VC:vpPrem2
+                      [\vver{v} Oc, just=VC:vpPrem2]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ]
+  ]
+]
+\end{prooftree}
+\newline
+I=$\langle U, M^{*},N^{*},O^{*} \rangle$ \newline
+U=\{a, b, c\} \newline
+$M^{*}=\{c, b\}$ \newline
+$N^{*}=\{b\}$ \newline
+$O^{*}=\{c, a\}$ \newline
 
 \end{document}
